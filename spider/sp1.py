@@ -13,6 +13,7 @@ class SP1:
         print('爬取图片')
         self.url = url
     def sp(self):
+        ret = []
         option = webdriver.FirefoxOptions()
         option.add_argument("-headless")
         option.set_preference('permissions.default.image', 2)
@@ -35,16 +36,19 @@ class SP1:
                 driver.execute_script('window.scrollTo(0,'+str(i)+')')
                 time.sleep(0.003)
 
-            ret = driver.find_elements(by=By.XPATH,value='//li/img')
+            es = driver.find_elements(by=By.XPATH,value='//li/img')
             
-            print(len(ret))
-            for r in ret:
-                url2 = r.get_attribute('data-src')
-                print(url2)
+            print(len(es))
+            for e in es:
+                url2 = e.get_attribute('data-src')
+                # print(url2)
+                ret.append(url2)
         except :
             print("xpath error")
         finally:
             driver.quit()
+        return ret
 if __name__=='__main__':  
     s = SP1('https://copymanga.org/comic/r402/chapter/664974f8-92a6-11e9-8d6f-024352452ce0')
-    s.sp()
+    ret = s.sp()
+    print(ret)

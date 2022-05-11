@@ -13,6 +13,7 @@ class SP0:
         print('爬取目录的类,name是',name)
         self.url = 'https://copymanga.org/comic/'+name
     def sp(self):
+        ret = []
         option = webdriver.FirefoxOptions()
         option.add_argument("-headless")
         option.set_preference('permissions.default.image', 2)
@@ -36,17 +37,21 @@ class SP0:
             #     EC.presence_of_element_located(iframe)
             # )
             
-            ret = driver.find_elements(by=By.XPATH,value='//div[@id="default全部"]/ul/a')
+            es = driver.find_elements(by=By.XPATH,value='//div[@id="default全部"]/ul/a')
             
-            print(len(ret))
-            for r in ret:
-                url2 = r.get_attribute('href')
-                text = r.get_attribute('text')
-                print(text,url2)
+            print(len(es))
+            for e in es:
+                url2 = e.get_attribute('href')
+                text = e.get_attribute('text')
+                # print(text,url2)
+                r = {'title':text,'url':url2}
+                ret.append(r)
         except :
             print("xpath error")
         finally:
             driver.quit()
+        return ret
 if __name__=='__main__':  
     s = SP0('r402')
-    s.sp()
+    ret = s.sp()
+    print(ret)
