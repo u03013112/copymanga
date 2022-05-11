@@ -35,7 +35,8 @@ class SP0:
             # wait(driver, 10).until(
             #     EC.presence_of_element_located(iframe)
             # )
-            ret = driver.find_elements_by_xpath('//div[@id="default全部"]/ul/a')
+            
+            ret = driver.find_elements(by=By.XPATH,value='//div[@id="default全部"]/ul/a')
             
             print(len(ret))
             for r in ret:
