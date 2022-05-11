@@ -1,0 +1,18 @@
+version: '2'
+services: 
+  firefox:
+    image: selenium/standalone-firefox
+    ports:
+      - 4444:4444
+  spider:
+    image: python:3
+    container_name: 'spider'
+    tty: true
+    volumes:
+      - ../:/src:cached
+    working_dir: /src/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "1"
